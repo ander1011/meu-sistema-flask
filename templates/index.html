@@ -16,7 +16,7 @@
         <a href="{{ url_for('historico_uploads') }}">📂 Histórico de Uploads</a>
         <a href="{{ url_for('upload_file') }}">⬆️ Fazer Upload</a>
         <a href="{{ url_for('arquivos_convertidos') }}">📑 Arquivos Convertidos</a>
-        <a href="{{ url_for('upload_file') }}">📥 Importar Arquivo para Conversão</a>
+        <a href="{{ url_for('importar_fornecedores') }}">📥 Importar Arquivo para Conversão</a>  <!-- Corrigido -->
     </div>
 
     <!-- Conteúdo principal -->
@@ -24,6 +24,14 @@
         <h1>Bem-vindo ao Sistema de Gerenciamento</h1>
         <p>Utilize o menu à esquerda para navegar entre as opções.</p>
     </div>
+
+    <!-- Carregar o JavaScript no final do <body> para evitar problemas de carregamento -->
+    <script>
+        console.log("JavaScript carregado com sucesso!");
+    </script>
+    
+    <!-- Chamar o arquivo externo de script.js -->
+    <script src="{{ url_for('static', filename='js/script.js') }}" defer></script>
 
 </body>
 </html>

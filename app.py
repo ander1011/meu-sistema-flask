@@ -10,6 +10,8 @@ from openpyxl import Workbook
 
 # 🔹 Criar instância do Flask
 app = Flask(__name__)
+app = Flask(__name__, static_folder='static', template_folder='templates')
+
 
 # 🔹 Configurações
 app.config['DEBUG'] = True
