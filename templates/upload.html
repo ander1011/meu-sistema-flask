@@ -10,8 +10,8 @@
 
     <!-- Menu Lateral -->
     <nav class="sidebar">
+        <h2>Menu</h2>
         <ul>
-            <h2>Menu</h2>
             <li><a href="{{ url_for('home') }}">🏠 Página Inicial</a></li>
             <li><a href="{{ url_for('listar_fornecedores') }}">📋 Fornecedores</a></li>
             <li><a href="{{ url_for('historico_uploads') }}">📂 Histórico de Uploads</a></li>
@@ -21,36 +21,40 @@
         </ul>
     </nav>
 
-    <!-- Conteúdo da Página -->
+    <!-- Conteúdo Principal -->
     <main class="content">
         <h1>📤 Importar Arquivo</h1>
 
-        <!-- Exibir mensagens de erro ou sucesso -->
+        <!-- Mensagens Flash -->
         {% with messages = get_flashed_messages(with_categories=true) %}
-           {% if messages %}
-              {% for category, message in messages %}
-                 <div class="alert alert-{{ category }}">{{ message }}</div>
-              {% endfor %}
-           {% endif %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
         {% endwith %}
 
-        <!-- Formulário para upload de arquivo para conversão -->
-        <h2>📥 Importar Arquivo para Conversão</h2>
-        <form action="{{ url_for('importar_fornecedores') }}" method="POST" enctype="multipart/form-data">
-    	    <label for="file">Selecione um arquivo Excel (.xlsx):</label>
-    	    <input type="file" name="file" id="file" required>
-    	    <button type="submit">📥 Importar Arquivo</button>
-	    </form>
+        <!-- Formulário para Importar Arquivo para Conversão -->
+        <div class="upload-container">
+            <h2>📥 Importar Arquivo para Conversão</h2>
+            <form action="{{ url_for('importar_fornecedores') }}" method="POST" enctype="multipart/form-data">
+                <label for="file">Selecione um arquivo Excel (.xlsx):</label>
+                <input type="file" name="file" id="file" required>
+                <button type="submit">📥 Importar Arquivo</button>
+            </form>
+        </div>
 
         <br>
 
-        <!-- Formulário para upload de fornecedores -->
-        <h2>📥 Importar Fornecedores</h2>
-        <form action="{{ url_for('importar_fornecedores') }}" method="POST" enctype="multipart/form-data">
-            <label for="file_fornecedores">Selecione um arquivo Excel (.xlsx) com fornecedores:</label>
-            <input type="file" name="file" id="file_fornecedores" required>
-            <button type="submit">📥 Importar Fornecedores</button>
-        </form>
+        <!-- Formulário para Importar Fornecedores -->
+        <div class="upload-container">
+            <h2>📥 Importar Fornecedores</h2>
+            <form action="{{ url_for('importar_fornecedores') }}" method="POST" enctype="multipart/form-data">
+                <label for="file_fornecedores">Selecione um arquivo Excel (.xlsx) com fornecedores:</label>
+                <input type="file" name="file" id="file_fornecedores" required>
+                <button type="submit">📥 Importar Fornecedores</button>
+            </form>
+        </div>
     </main>
 
 </body>
