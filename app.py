@@ -63,6 +63,27 @@ def listar_fornecedores():
     fornecedores = Fornecedor.query.all()
     return render_template('fornecedores.html', fornecedores=fornecedores)
 
+@app.route('/adicionar_fornecedor', methods=['POST'])
+def adicionar_fornecedor():
+    nome = request.form.get('nome')
+    codigo_contabil = request.form.get('codigo_contabil')
+
+    if not nome or not codigo_contabil:
+        flash("Preencha todos os campos!", "danger")
+        return redirect(url_for('listar_fornecedores'))
+
+    novo_fornecedor = Fornecedor(nome=nome, codigo_contabil=codigo_contabil)
+
+    try:
+        db.session.add(novo_fornecedor)
+        db.session.commit()
+        flash("Fornecedor adicionado com sucesso!", "success")
+    except Exception as e:
+        db.session.rollback()
+        flash(f"Erro ao adicionar fornecedor: {str(e)}", "danger")
+
+    return redirect(url_for('listar_fornecedores'))
+
 @app.route('/excluir_multiplo', methods=['GET'])
 def excluir_multiplo():
     ids = request.args.get('ids')
