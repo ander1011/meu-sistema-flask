@@ -17,7 +17,10 @@
             <li><a href="{{ url_for('historico_uploads') }}">📂 Histórico de Uploads</a></li>
             <a href="{{ url_for('upload_file') }}">⬆️ Fazer Upload</a>
             <li><a href="{{ url_for('arquivos_convertidos') }}">📑 Arquivos Convertidos</a></li>
-            <a href="{{ url_for('upload_file') }}">📥 Importar Arquivo para Conversão</a>
+            <form action="{{ url_for('importar_fornecedores') }}" method="POST" enctype="multipart/form-data">        
+               <input type="file" name="file">                                                                                  
+               <button type="submit">📥 Importar Arquivo para Conversão</button>
+            </form>
         </ul>
     </nav>
 
