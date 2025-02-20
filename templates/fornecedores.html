@@ -96,10 +96,10 @@
 
         <!-- Formulário para adicionar novo fornecedor -->
         <h2>Adicionar Novo Fornecedor</h2>
-        <form action="{{ url_for('importar_fornecedores') }}" method="POST">
+        <form action="{{ url_for('adicionar_fornecedor') }}" method="POST">
             <label>Nome do Fornecedor:</label>
             <input type="text" name="nome" required>
-            
+    
             <label>Código Contábil:</label>
             <input type="number" name="codigo_contabil" required>
 
