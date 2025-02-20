@@ -1,2 +1,4 @@
-"gunicorn" 
-"gunicorn" 
+Flask
+Flask-Migrate
+Flask-SQLAlchemy
+gunicorn
