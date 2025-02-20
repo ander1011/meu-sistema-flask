@@ -134,7 +134,7 @@ def exportar_fornecedores():
         mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
     )
 
-@app.route('/importar_fornecedores', methods=['POST'])
+@app.route('/importar_fornecedores', methods=['GET', 'POST'])
 def importar_fornecedores():
     if 'file' not in request.files:
         flash("Nenhum arquivo enviado!", "danger")
