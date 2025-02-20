@@ -199,6 +199,31 @@ def arquivos_convertidos():
     arquivos = ArquivoConvertido.query.order_by(ArquivoConvertido.data_conversao.desc()).all()
     return render_template('arquivos_convertidos.html', arquivos=arquivos)
 
+@app.route('/importar_arquivo_conversao', methods=['GET', 'POST'])
+def importar_arquivo_conversao():
+    if request.method == 'POST':
+        if 'file' not in request.files:
+            flash("Nenhum arquivo enviado!", "danger")
+            return redirect(url_for('importar_arquivo_conversao'))
+
+        file = request.files['file']
+        if file.filename == '':
+            flash("Nenhum arquivo selecionado!", "danger")
+            return redirect(url_for('importar_arquivo_conversao'))
+
+        if file and file.filename.endswith('.xlsx'):
+            try:
+                df = pd.read_excel(file)
+                # Adapte esta parte para processar o arquivo de conversão corretamente
+                flash("Arquivo para conversão importado com sucesso!", "success")
+            except Exception as e:
+                flash(f"Erro ao processar o arquivo: {str(e)}", "danger")
+        else:
+            flash("Formato de arquivo inválido.", "danger")
+
+    return render_template('importar_conversao.html')
+
+
 @app.route('/download/<filename>')
 def download_file(filename):
     return send_from_directory(app.config['UPLOAD_FOLDER'], filename, as_attachment=True)
