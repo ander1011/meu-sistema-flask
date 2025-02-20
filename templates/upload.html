@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload de Arquivo</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+
+    <!-- Menu Lateral -->
+    <nav class="sidebar">
+        <ul>
+            <h2>Menu</h2>
+            <li><a href="{{ url_for('home') }}">🏠 Página Inicial</a></li>
+            <li><a href="{{ url_for('listar_fornecedores') }}">📋 Fornecedores</a></li>
+            <li><a href="{{ url_for('historico_uploads') }}">📂 Histórico de Uploads</a></li>
+            <a href="{{ url_for('upload_file') }}">⬆️ Fazer Upload</a>
+            <li><a href="{{ url_for('arquivos_convertidos') }}">📑 Arquivos Convertidos</a></li>
+            <a href="{{ url_for('upload_file') }}">📥 Importar Arquivo para Conversão</a>
+        </ul>
+    </nav>
+
+    <!-- Conteúdo da Página -->
+    <main class="content">
+        <h1>📤 Importar Arquivo</h1>
+
+        <!-- Exibir mensagens de erro ou sucesso -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+           {% if messages %}
+              {% for category, message in messages %}
+                 <div class="alert alert-{{ category }}">{{ message }}</div>
+              {% endfor %}
+           {% endif %}
+        {% endwith %}
+
+
+        <!-- Formulário para upload de arquivo para conversão -->
+        <form action="{{ url_for('importar_fornecedores') }}" method="POST" enctype="multipart/form-data">
+    	    <label for="file">Selecione um arquivo Excel (.xlsx):</label>
+    	    <input type="file" name="file" id="file" required>
+    	    <button type="submit">📥 Importar Fornecedores</button>
+	</form>
+
+        <br>
+
+        <!-- Formulário para upload de fornecedores -->
+        <h2>📥 Importar Fornecedores</h2>
+        <form action="{{ url_for('importar_fornecedores') }}" method="POST" enctype="multipart/form-data">
+            <label for="file_fornecedores">Selecione um arquivo Excel (.xlsx) com fornecedores:</label>
+            <input type="file" name="file" id="file_fornecedores" required>
+            <button type="submit">📥 Importar Fornecedores</button>
+        </form>
+    </main>
+
+</body>
+</html>

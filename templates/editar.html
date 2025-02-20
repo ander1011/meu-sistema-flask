@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Editar Fornecedor</h2>
+<form action="{{ url_for('editar', id=fornecedor.id) }}" method="POST">
+    <label>Nome:</label>
+    <input type="text" name="nome" value="{{ fornecedor.nome }}" required>
+    
+    <label>Código Contábil:</label>
+    <input type="number" name="codigo_contabil" value="{{ fornecedor.codigo_contabil }}" required>
+    
+    <button type="submit">Salvar Alterações</button>
+    <a href="{{ url_for('listar_fornecedores') }}">Cancelar</a>
+</form>
+{% endblock %}

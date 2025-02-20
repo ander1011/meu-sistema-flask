@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arquivos Convertidos</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <nav class="sidebar">
+            <ul>
+                <h2>Menu</h2>
+                <li><a href="{{ url_for('home') }}">🏠 Página Inicial</a></li>
+                <li><a href="{{ url_for('listar_fornecedores') }}">📋 Fornecedores</a></li>
+                <li><a href="{{ url_for('historico_uploads') }}">📂 Histórico de Uploads</a></li>
+                <a href="{{ url_for('upload_file') }}">⬆️ Fazer Upload</a>
+               <li><a href="{{ url_for('arquivos_convertidos') }}">📑 Arquivos Convertidos</a></li>
+               <a href="{{ url_for('upload_file') }}">📥 Importar Arquivo para Conversão</a>
+            </ul>
+        </nav>
+
+        <div class="content">
+            <h1>📑 Arquivos Convertidos</h1>
+
+            <table>
+                <tr>
+                    <th>Nome do Arquivo</th>
+                    <th>Data de Conversão</th>
+                    <th>Ação</th>
+                </tr>
+                {% for arquivo in arquivos %}
+                <tr>
+                    <td>{{ arquivo.nome_arquivo }}</td>
+                    <td>{{ arquivo.data_conversao.strftime('%d/%m/%Y %H:%M') }}</td>
+                    <td>
+                        <a href="{{ url_for('download_file', filename=arquivo.nome_arquivo) }}">⬇️ Baixar</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+
+            <a href="{{ url_for('home') }}" class="button">⬅️ Voltar</a>
+        </div>
+    </div>
+</body>
+</html>

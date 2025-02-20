@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página Inicial</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+
+    <!-- Menu lateral -->
+    <div class="sidebar">
+        <h2>Menu</h2>
+        <a href="{{ url_for('home') }}">🏠 Página Inicial</a>
+        <a href="{{ url_for('listar_fornecedores') }}">📋 Fornecedores</a>
+        <a href="{{ url_for('historico_uploads') }}">📂 Histórico de Uploads</a>
+        <a href="{{ url_for('upload_file') }}">⬆️ Fazer Upload</a>
+        <a href="{{ url_for('arquivos_convertidos') }}">📑 Arquivos Convertidos</a>
+        <a href="{{ url_for('upload_file') }}">📥 Importar Arquivo para Conversão</a>
+    </div>
+
+    <!-- Conteúdo principal -->
+    <div class="content">
+        <h1>Bem-vindo ao Sistema de Gerenciamento</h1>
+        <p>Utilize o menu à esquerda para navegar entre as opções.</p>
+    </div>
+
+</body>
+</html>

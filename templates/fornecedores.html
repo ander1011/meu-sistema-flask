@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Fornecedores</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script>
+        function selecionarTodos() {
+            let checkboxes = document.querySelectorAll('.fornecedor-checkbox');
+            let selecionarTodosCheckbox = document.getElementById('selecionarTodos');
+            checkboxes.forEach(checkbox => checkbox.checked = selecionarTodosCheckbox.checked);
+        }
+
+        function excluirSelecionados() {
+            let checkboxes = document.querySelectorAll('.fornecedor-checkbox:checked');
+            let ids = Array.from(checkboxes).map(checkbox => checkbox.value).join(',');
+
+            if (ids.length === 0) {
+                alert("Nenhum fornecedor selecionado!");
+                return;
+            }
+
+            if (confirm("Tem certeza que deseja excluir os fornecedores selecionados?")) {
+                window.location.href = "/excluir_multiplo?ids=" + ids;
+            }
+        }
+    </script>
+</head>
+<body>
+ 
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="flashes">
+                {% for category, message in messages %}
+                    <div class="flash {{ category }}">{{ message }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+ 
+    <!-- Menu lateral -->
+    <div class="sidebar">
+        <h2>Menu</h2>
+        <a href="{{ url_for('home') }}">🏠 Página Inicial</a>
+        <a href="{{ url_for('listar_fornecedores') }}">📋 Fornecedores</a>
+        <a href="{{ url_for('historico_uploads') }}">📂 Histórico de Uploads</a>
+        <a href="{{ url_for('upload_file') }}">⬆️ Fazer Upload</a>
+        <a href="{{ url_for('arquivos_convertidos') }}">📑 Arquivos Convertidos</a>
+        <a href="{{ url_for('upload_file') }}">📥 Importar Arquivo para Conversão</a>
+    </div>
+
+    <!-- Conteúdo principal -->
+    <div class="content">
+        <h1>Lista de Fornecedores</h1>
+
+        <!-- Campo de busca -->
+        <form method="GET" action="{{ url_for('listar_fornecedores') }}">
+            <input type="text" name="busca" placeholder="Buscar fornecedor..." value="{{ termo_busca }}">
+            <button type="submit">🔍 Buscar</button>
+        </form>
+
+        <br>
+
+        <!-- Botão de exclusão em massa -->
+        <button onclick="excluirSelecionados()">🗑️ Excluir Selecionados</button>
+
+        <br><br>
+
+        <!-- Tabela de fornecedores -->
+        {% if fornecedores %}
+        <table border="1">
+            <tr>
+                <th><input type="checkbox" id="selecionarTodos" onclick="selecionarTodos()"></th>
+                <th>Nome</th>
+                <th>Código Contábil</th>
+                <th>Ações</th>
+            </tr>
+            {% for fornecedor in fornecedores %}
+            <tr>
+                <td><input type="checkbox" class="fornecedor-checkbox" value="{{ fornecedor.id }}"></td>
+                <td>{{ fornecedor.nome }}</td>
+                <td>{{ fornecedor.codigo_contabil }}</td>
+                <td>
+                    <a href="{{ url_for('editar', id=fornecedor.id) }}">✏️ Editar</a> |
+                    <a href="{{ url_for('excluir', id=fornecedor.id) }}" onclick="return confirm('Tem certeza que deseja excluir este fornecedor?')">🗑️ Excluir</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+        {% else %}
+            <p>Nenhum fornecedor encontrado.</p>
+        {% endif %}
+
+        <br>
+
+        <!-- Formulário para adicionar novo fornecedor -->
+        <h2>Adicionar Novo Fornecedor</h2>
+        <form action="{{ url_for('importar_fornecedores') }}" method="POST">
+            <label>Nome do Fornecedor:</label>
+            <input type="text" name="nome" required>
+            
+            <label>Código Contábil:</label>
+            <input type="number" name="codigo_contabil" required>
+
+            <button type="submit">➕ Adicionar</button>
+        </form>
+
+        <br>
+
+        <a href="{{ url_for('home') }}">
+            <button>⬅️ Voltar para Página Inicial</button>
+        </a>
+
+    </div>
+
+</body>
+</html>
