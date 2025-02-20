@@ -54,6 +54,20 @@
     <div class="content">
         <h1>Lista de Fornecedores</h1>
 
+          <!-- Formulário para adicionar novo fornecedor -->
+        <h2>Adicionar Novo Fornecedor</h2>
+        <form action="{{ url_for('adicionar_fornecedor') }}" method="POST">
+            <label>Nome do Fornecedor:</label>
+            <input type="text" name="nome" required>
+    
+            <label>Código Contábil:</label>
+            <input type="number" name="codigo_contabil" required>
+
+            <button type="submit">➕ Adicionar</button>
+        </form>
+        
+        <br>
+        
         <!-- Campo de busca -->
         <form method="GET" action="{{ url_for('listar_fornecedores') }}">
             <input type="text" name="busca" placeholder="Buscar fornecedor..." value="{{ termo_busca }}">
@@ -92,21 +106,6 @@
             <p>Nenhum fornecedor encontrado.</p>
         {% endif %}
 
-        <br>
-
-        <!-- Formulário para adicionar novo fornecedor -->
-        <h2>Adicionar Novo Fornecedor</h2>
-        <form action="{{ url_for('adicionar_fornecedor') }}" method="POST">
-            <label>Nome do Fornecedor:</label>
-            <input type="text" name="nome" required>
-    
-            <label>Código Contábil:</label>
-            <input type="number" name="codigo_contabil" required>
-
-            <button type="submit">➕ Adicionar</button>
-        </form>
-
-        <br>
 
         <a href="{{ url_for('home') }}">
             <button>⬅️ Voltar para Página Inicial</button>
