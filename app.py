@@ -103,6 +103,8 @@ def excluir(id):
     flash("Fornecedor excluído com sucesso!", "success")
     return redirect(url_for('listar_fornecedores'))
 
+
+
 @app.route('/upload')
 def upload_file():
     return render_template('upload.html')
@@ -133,6 +135,21 @@ def historico_uploads():
     uploads = HistoricoUpload.query.order_by(HistoricoUpload.data_upload.desc()).all()
     return render_template('historico_uploads.html', uploads=uploads)
 
+@app.route('/editar/<int:id>', methods=['GET', 'POST'])
+def editar(id):
+    fornecedor = Fornecedor.query.get(id)
+    if not fornecedor:
+        flash("Fornecedor não encontrado!", "danger")
+        return redirect(url_for('listar_fornecedores'))
+
+    if request.method == 'POST':
+        fornecedor.nome = request.form['nome']
+        fornecedor.codigo_contabil = request.form['codigo_contabil']
+        db.session.commit()
+        flash("Fornecedor atualizado com sucesso!", "success")
+        return redirect(url_for('listar_fornecedores'))
+
+    return render_template('editar.html', fornecedor=fornecedor)
 
 
 # 🔹 Importar e Converter Arquivo
