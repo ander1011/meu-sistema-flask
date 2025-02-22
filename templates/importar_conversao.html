@@ -17,7 +17,7 @@
             <li><a href="{{ url_for('historico_uploads') }}">📂 Histórico de Uploads</a></li>
             <li><a href="{{ url_for('upload_file') }}">⬆️ Plano Contábil</a></li>
             <li><a href="{{ url_for('arquivos_convertidos') }}">📑 Arquivos Convertidos</a></li>
-            <li><a href="{{ url_for('importar_arquivo_conversao') }}">📥 Importar Arquivo para Conversão</a></li>
+            <li><a href="{{ url_for('importar_conversao') }}">📥 Importar Arquivo para Conversão</a></li>
         </ul>
     </nav>
 
@@ -37,10 +37,10 @@
         <!-- Formulário para Importar Arquivo para Conversão -->
         <div class="upload-container">
             <h2>📥 Importar Arquivo para Conversão</h2>
-            <form action="{{ url_for('importar_arquivo_conversao') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ url_for('importar_conversao') }}" method="POST" enctype="multipart/form-data">
                 <label for="file">Selecione um arquivo Excel (.xlsx):</label>
                 <input type="file" name="file" id="file" required>
-                <button type="submit">📥 Importar Arquivo</button>
+                <button type="submit">📥 Converter Arquivo</button>
             </form>
         </div>
     </main>
