@@ -122,6 +122,13 @@ def exportar_fornecedores():
         mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
     )
 
+@app.route('/historico_uploads')
+def historico_uploads():
+    uploads = HistoricoUpload.query.order_by(HistoricoUpload.data_upload.desc()).all()
+    return render_template('historico_uploads.html', uploads=uploads)
+
+
+
 # 🔹 Importar e Converter Arquivo
 @app.route('/importar_conversao', methods=['GET', 'POST'])
 def importar_conversao():
