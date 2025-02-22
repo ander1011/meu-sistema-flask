@@ -164,6 +164,41 @@ def importar_conversao():
 
     return render_template('importar_conversao.html')
 
+@app.route('/importar_fornecedores', methods=['GET', 'POST'])
+def importar_fornecedores():
+    if 'file' not in request.files:
+        flash("Nenhum arquivo enviado!", "danger")
+        return redirect(url_for('listar_fornecedores'))
+
+    file = request.files['file']
+    if file.filename == '':
+        flash("Nenhum arquivo selecionado!", "danger")
+        return redirect(url_for('listar_fornecedores'))
+
+    if file and file.filename.endswith('.xlsx'):
+        try:
+            df = pd.read_excel(file)
+            for _, row in df.iterrows():
+                novo_fornecedor = Fornecedor(
+                    nome=row["FORNECEDORES"],
+                    codigo_contabil=row["Código Contábil"]
+                )
+                db.session.add(novo_fornecedor)
+
+            historico = HistoricoUpload(nome_arquivo=file.filename)
+            db.session.add(historico)
+            db.session.commit()
+
+            flash("Arquivo processado com sucesso!", "success")
+        except Exception as e:
+            db.session.rollback()
+            flash(f"Erro ao processar o arquivo: {str(e)}", "danger")
+    else:
+        flash("Formato de arquivo inválido.", "danger")
+
+    return redirect(url_for('listar_fornecedores'))
+
+
 # 🔹 Função para converter o arquivo
 def converter_arquivo(input_path):
     try:
