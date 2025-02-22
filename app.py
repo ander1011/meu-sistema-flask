@@ -64,6 +64,12 @@ def listar_fornecedores():
     fornecedores = Fornecedor.query.all()
     return render_template('fornecedores.html', fornecedores=fornecedores)
 
+@app.route('/arquivos_convertidos')
+def arquivos_convertidos():
+    arquivos = ArquivoConvertido.query.order_by(ArquivoConvertido.data_conversao.desc()).all()
+    return render_template('arquivos_convertidos.html', arquivos=arquivos)
+
+
 @app.route('/adicionar_fornecedor', methods=['POST'])
 def adicionar_fornecedor():
     nome = request.form.get('nome')
